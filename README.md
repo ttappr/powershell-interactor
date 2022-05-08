@@ -48,7 +48,17 @@ runtime.sendMessage()-> :                :                  :
 * The webpage sends a message along with a response callback to the middle 
   component using `chrome.runtime.sendMessage()`.
 * The middle component's `runtime.onMessageExternal` listener receives the 
-  message.
+  message. It then creates a `MessageChannel` to pass to the worker so it can
+  receive the response later. One port of this channel is passed along with the
+  message to the worker.
+* The worker receives the message and port via its `window.onmessage` listener.
+  It then sends the message to the native host, and recieves the host's 
+  response. 
+* The response is passed from the worker back to the middle component through
+  the `MessageChannel` port shared by the two.
+* The middle component then passes the response to the webpage via the callback
+  the webpage provided with the initial request.
+
  
 ## Supported Scenario
   
@@ -82,7 +92,7 @@ messaging passing between the middle script and web page.
 
 ## Setup
 
-The steps to get this to run on a Windows system are easy:
+The steps to get this to run on a Windows system are relatively easy:
 
 * On Windows, add registry entry for the host process:
   * `HKCU:\Software\Google\Chrome\NativeMessagingHosts\com.tweedle.examplehost`
