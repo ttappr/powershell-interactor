@@ -23,3 +23,9 @@ self.addEventListener('message', (event) => {
     // Send response back to middle component.
     nativePort.postMessage(event.data);
 });
+
+
+// The magic connection - the other side of the path.
+chrome.runtime.onConnect.addListener((port) => {
+    port.postMessage({from_background: "we did it!!"});
+});
