@@ -41,7 +41,7 @@ runtime.sendMessage()-> :                :                  :
 ### Components
 |Component|File|Description|
 |---------|----|-----------|
-|webpage  |`website\app-script.js`|The page or app the user interacts with.|
+|webpage  |`website\app-script.js`|The script in the page the user interacts with.|
 |"middle" |`extension\extension.js`|The go-between for the webpage and background service worker.|
 |worker   |`extension\background.js`|The background service worker that interacts with PowerShell.|
 |powershell|`pshost\host.ps1`|A PowerShell process started by the browser and connected via Native Messaging.|
@@ -61,7 +61,6 @@ runtime.sendMessage()-> :                :                  :
 * The middle component then passes the response to the webpage via the callback
   the webpage provided with the initial request.
 
- 
 ## Supported Scenario
   
  This solution works under a specific scenario: the extension popup is 
@@ -129,3 +128,9 @@ button on it that sends a request and recevies a response.
 * Press the button and observe the effects.
 * The PS host produces a log in its own folder, `log.txt` that can be checked to
   make sure it's receiving and sending.
+## New Approach
+
+After some reading and experimentation, I've found a workable solution to 
+support communication between the components.
+
+![communication](/svg/RPB1Ri8m38RlUGhVjXruWMgQKAFTjeaRvpHu4D74MUm2U_ivRO4nraEb-F_-twxJ9OihCiGUFCKufE2T14h6y3wax8gBmFBTexvBy1Kq3rSfKYA_AnGH2XwmC1hJqGcwGaV6Oa0V9INua5qIE6ANtHR1CQmDfWqeF1hm99YuDlvhyPHKacgnTsBd_7vRQD0arTkRoDmx-QGIxqoPZZhf3lk-cbONard3uWNM3Mm2PoT-zthGnezFjQw2RM2ByXPO0AjWZ8Mfh2Ccz9Mq8zasGCbEnPazevbOtf5Pb_0RB_Wre0R7IJAcXKcOep_qKWxLSQxVvhHZpghHIzg4fCVdnM8-qY1cBDoxx8XfUUvw_IobxNzhgBojqtAcn1V3KZUeFyOF "communication")
