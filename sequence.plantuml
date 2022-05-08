@@ -14,7 +14,7 @@ box platform
     participant powershell as P
 end box
 
-P <-- P: subscribe onConnect
+B <-- B: subscribe onConnect
 
 W -> W: dispatchEvent()
 W --> C: message event
