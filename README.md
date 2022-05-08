@@ -76,6 +76,17 @@ by listening on the ports' `onMessage` event.
 * The webpage script receives the custom event that holds the response from the
   native host and displays it.
 
+## Example Requirements
+
+This example can run on Linux, but the instructions below have some steps
+specific to Windows. Anyone savvy, or bold, enough to experiment with this 
+project shouldn't have too much difficulty translating the steps for Linux or
+Mac.
+* PowerShell Core is needed. Also known as PowerShell 7. PowerShell has versions
+  for Mac and Linux as well as Windows.
+* Python 3 to run the simple HTTP server. Otherwise, you can host the webpage
+  in any other web server.
+
 ## Setup
 
 The steps to get this to run on a Windows system are relatively easy:
@@ -106,3 +117,9 @@ button on it that sends a request and recevies a response.
 * Press the button and observe the effects.
 * The PS host produces a log in its own folder, `log.txt` that can be checked to
   make sure it's receiving and sending.
+
+The `\pshost\runhost.bat` file has an absolute path to the PowerShell 7/Core
+executable on Windows. This will need to be modified to the absolute path
+on the host system if using Linux or Mac. I don't know if the PowerShell 
+console on other platforms supports `.bat` files, so it may need conversion 
+to a `bash` script - it's only a couple lines of code. Simple.
