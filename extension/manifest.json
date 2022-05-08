@@ -1,0 +1,20 @@
+{
+    "name": "PowerShell Interactor",
+    "version": "1.0.0",
+    "description": "Interacts with a PowerShell script.",
+    "manifest_version": 3,
+    "author": "tweedle@lexx.com",
+    "action": {
+        "default_title": "PowerShell Interactor",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "nativeMessaging"
+    ],
+    "externally_connectable": {
+        "matches": ["*://localhost/*"]
+    }
+}

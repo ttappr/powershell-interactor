@@ -1,0 +1,85 @@
+Extension : chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/
+Window    : '--parent-window=0'
+Got  : "GET_MESSAGE_CMD"
+Disconnected: Cannot find an overload for "Write" and the argument count: "2".
+Extension : chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/
+Window    : '--parent-window=0'
+Got  : "GET_MESSAGE_CMD"
+Disconnected: Cannot find an overload for "Write" and the argument count: "2".
+Extension : chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/
+Window    : '--parent-window=0'
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Disconnected: Exception calling "ReadUInt32" with "0" argument(s): "Unable to read beyond the end of the stream."
+Extension : chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/
+Window    : '--parent-window=0'
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Disconnected: Exception calling "ReadUInt32" with "0" argument(s): "Unable to read beyond the end of the stream."
+Extension : chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/
+Window    : $    Window
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Got  : "GET_MESSAGE_CMD"
+Sent : 'Hello, World!!
+------------------
+Disconnected: Exception calling "ReadUInt32" with "0" argument(s): "Unable to read beyond the end of the stream."
+Parameters received:
+Extension : chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/
+Window    : '--parent-window=0'
+Received: "GET_MESSAGE_CMD"
+Response: "Unrecognized request!"
+----
+Received: "GET_MESSAGE_CMD"
+Response: "Unrecognized request!"
+----
+Received: "GET_MESSAGE_CMD"
+Response: "Unrecognized request!"
+----
+Received: "GET_MESSAGE_CMD"
+Response: "Unrecognized request!"
+----
+Disconnected: Exception calling "ReadUInt32" with "0" argument(s): "Unable to read beyond the end of the stream."
+Parameters received:
+Extension : chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/
+Window    : '--parent-window=0'
+Received: "GET_MESSAGE_CMD"
+Response: "Hello, World!!"
+----
+Disconnected: Exception calling "ReadUInt32" with "0" argument(s): "Unable to read beyond the end of the stream."
