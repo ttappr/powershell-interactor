@@ -16,5 +16,11 @@
     ],
     "externally_connectable": {
         "matches": ["*://localhost/*"]
-    }
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "js": ["extension.js"]
+        }
+    ]
 }
