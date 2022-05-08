@@ -97,7 +97,7 @@ put inside the popup.
 The next direction I'll likely take is a content page approach with injecting
 Javascript into the browser's active window. Maybe the API's used could be 
 be the same, or similar, to what's in between "middle" and worker in the
-sequence diagram now.
+sequence diagram now. I think that's unlikely though...
 
 ## Setup
 
