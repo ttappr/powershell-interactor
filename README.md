@@ -35,15 +35,14 @@ runtime.sendMessage()-> :                :                  :
 
 ```
 ### Components
-* webpage - The page or app the user interacts with.
-               This is the `website\app-script.js` file in the sources.
-* "middle" - The go-between for the webpage and background service worker.
-               This is the `extension\extension.js` file in the sources.
-* worker - The background service worker that interacts with the PS process.
-               The corresponding file is `extension\background.js`.
-* powershell - A PowerShell process started by the browser that uses the 
-               Native Messaging to provide operations in the context of the 
-               host platform. The file is `pshost\host.ps1`.
+* webpage - (`website\app-script.js`) The page or app the user interacts with.
+* "middle" - (`extension\extension.js`) The go-between for the webpage and 
+               background service worker.
+* worker - (`extension\background.js`) The background service worker that 
+               interacts with the PS process.
+* powershell - (`pshost\host.ps1`) A PowerShell process started by the browser 
+               that uses the Native Messaging to provide operations in the 
+               context of the host platform.
 ### Sequence
 * The webpage sends a message along with a response callback to the middle 
   component using `chrome.runtime.sendMessage()`.
