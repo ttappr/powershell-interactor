@@ -45,8 +45,9 @@ while ($true) {
 
         # Avoid processing raw data from browsers using Invoke-Expression, 
         # et al. Implement specific operations.
-        if ($message -match 'GET_MESSAGE_CMD') {
-            Write-Message '"Hello, World!!"'
+        if ($message -match 'LIST_WORKING_DIRECTORY') {
+            $list = (Get-ChildItem .).Name | ConvertTo-Json
+            Write-Message $list
         } else {
             Write-Message '"Unrecognized request!"'
         }

@@ -1,9 +1,14 @@
-function sendRequest() {
-    let rsp = document.querySelector('#response');
-    chrome.runtime.sendMessage(
-                        'ibmjbffabdgooobjlmgbpabpknndpgdn',
-                        'GET_MESSAGE_CMD',
-                        (response) => {
-                            rsp.innerText = JSON.stringify(response)
-                        });
+
+// Register for message events coming from the extension content scripts.
+window.addEventListener('incomingMessage', (e) => {
+    // Display message received.
+    let span       = document.querySelector('#response');
+    span.innerText = JSON.stringify(e.detail);
+});
+
+// Function called when button on wepage is pressed.
+function sendRequest(request) {
+    // Issue message event visible to extension content scripts.
+    let e = new CustomEvent('outgoingMessage', {detail: request});
+    window.dispatchEvent(e);
 }

@@ -2,3 +2,4 @@ website/web.config
 *.bak
 pshost/log.txt
 launchapp.ps1
+misc/

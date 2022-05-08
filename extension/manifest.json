@@ -12,9 +12,23 @@
         "service_worker": "background.js"
     },
     "permissions": [
-        "nativeMessaging"
+        "nativeMessaging",
+        "scripting"
     ],
     "externally_connectable": {
         "matches": ["*://localhost/*"]
-    }
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "js": ["extension.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["injected.js"],
+            "matches": ["*://*/*"]
+        }
+    ]
 }
