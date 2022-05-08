@@ -1,6 +1,6 @@
  # PowerShell Interactor Browser Extension
  
- This is a minimal example of a browswer extension that allows a Web application
+ This is a minimal example of a browser extension that allows a Web application
  or site to interact with PowerShell running locally on the host system.
 
 ```console
@@ -24,12 +24,17 @@ runtime.sendMessage()-> :                :                  :
      :<------------ callback()           :                  :
 
 ```
-
+Components
+* webpage - The page or app the user interacts with.
+* "middle" - The go-between for the webpage and background service worker.
+* worker - The background service worker that interacts with the PS process.
+* powershell - A PowerShell process started by the browser that uses the 
+               Native Messaging to provide operations in the context of the 
+               host platform.
 
  
 ## Supported Scenario
- 
- 
+  
  This solution works under a specific scenario: the extension popup is 
  displayed.
  
@@ -37,7 +42,7 @@ runtime.sendMessage()-> :                :                  :
  page has a `<script>` reference to a JavaScript file implementing the message
  passing between webpage and service worker.
  
- ## Problem
+  ## Problem
  
 I want my web app to be able to indirectly send and receive data to/from the 
 PowerShell process via these other components at any time. This should work
