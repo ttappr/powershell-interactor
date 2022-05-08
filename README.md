@@ -96,16 +96,15 @@ The steps to get this to run on a Windows system are relatively easy:
 * On Windows, add registry entry for the host process:
   * `HKCU:\Software\Google\Chrome\NativeMessagingHosts\com.tweedle.examplehost`
   * Set its `REG_SZ` value to the absolute path of the host's manifest file.
-    `\pshost\manifest.json`
-* Set up Web server to host files in `\website`.
-  * Give it a nameless URL like `http:\\localhost:4000` - it has to match the 
-    filters in the manifest files.
+    `\pshost\manifest.json` 
 * Load the unpacked extension in Chrome or MS Edge and make a note of its ID 
   once loaded.
 * Update the `"allowed_origins"` field in `\pshost\manifest.json` with the 
   extension's ID.
   * Also update the `"path"` field with the absolute path to the batch file,
     `\pshost\runhost.bat`.
+* Open a command shell console and `cd` in to the `\website` folder and run
+  the `webserver.py` script. Then open your browser to `http://localhost:4040`
 
 After the set up is done, open the browser to the local site. The page has one
 button on it that sends a request and recevies a response.
