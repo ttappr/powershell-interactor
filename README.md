@@ -36,12 +36,19 @@ runtime.sendMessage()-> :                :                  :
 ```
 ### Components
 * webpage - The page or app the user interacts with.
+               This is the `website\app-script.js` file in the sources.
 * "middle" - The go-between for the webpage and background service worker.
+               This is the `extension\extension.js` file in the sources.
 * worker - The background service worker that interacts with the PS process.
+               The corresponding file is `extension\background.js`.
 * powershell - A PowerShell process started by the browser that uses the 
                Native Messaging to provide operations in the context of the 
-               host platform.
-
+               host platform. The file is `pshost\host.ps1`.
+### Sequence
+* The webpage sends a message along with a response callback to the middle 
+  component using `chrome.runtime.sendMessage()`.
+* The middle component's `runtime.onMessageExternal` listener receives the 
+  message.
  
 ## Supported Scenario
   
@@ -79,8 +86,8 @@ The steps to get this to run on a Windows system are easy:
 
 * On Windows, add registry entry for the host process:
   * `HKCU:\Software\Google\Chrome\NativeMessagingHosts\com.tweedle.examplehost`
-  * Set its `REG_SZ` value to the absolute path of batch file 
-    `\pshost\runhost.bat`
+  * Set its `REG_SZ` value to the absolute path of the host's manifest file.
+    `\pshost\manifest.json`
 * Set up Web server to host files in `\website`.
   * Give it a nameless URL like `http:\\localhost:4000` - it has to match the 
     filters in the manifest files.
@@ -88,6 +95,8 @@ The steps to get this to run on a Windows system are easy:
   once loaded.
 * Update the `"allowed_origins"` field in `\pshost\manifest.json` with the 
   extension's ID.
+  * Also update the `"path"` field with the absolute path to the batch file,
+    `\pshost\runhost.bat`.
 
 After the set up is done, open the browser to the local site. The page has one
 button on it that sends a request and recevies a response.
