@@ -90,7 +90,14 @@ extension loaded, but not visible. I thought that maybe the `sandbox` field in
 `manifest.json` could accomplish this, but I didn't have any luck. I tried 
 importing the webpage facing script of the extension into the background 
 service worker, but wasn't sure how to proceed since I'd have to redo the 
-messaging passing between the middle script and web page.
+messaging passing between the middle script and web page. Plus the service
+worker may not stay loaded - so same problem I have with the "middle" component
+put inside the popup.
+
+The next direction I'll likely take is a content page approach with injecting
+Javascript into the browser's active window. Maybe the API's used could be 
+be the same, or similar, to what's in between "middle" and worker in the
+sequence diagram now.
 
 ## Setup
 
