@@ -1,7 +1,17 @@
  # PowerShell Interactor Browser Extension
  
- This is a minimal example of a browser extension that allows a Web application
- or site to interact with PowerShell running locally on the host system.
+This is a minimal example of a browser extension that allows a Web application
+or site to interact with PowerShell running locally on the host system.
+
+This design may be useful for extensions that show a nice feature rich popup
+page, and it's the main UI the user interacts with. However, this isn't a
+good setup to support arbitrary web pages communicating with the extension.
+I need some help on what direction to take to support the latter scenario.
+
+The sequence diagram below shows which particular browser API's were used to
+communicate between the components.
+
+### Sequence Diagram
 
 ```console
 +---------+       +---------+       +---------+   |   +------------+
@@ -24,7 +34,7 @@ runtime.sendMessage()-> :                :                  :
      :<------------ callback()           :                  :
 
 ```
-Components
+### Components
 * webpage - The page or app the user interacts with.
 * "middle" - The go-between for the webpage and background service worker.
 * worker - The background service worker that interacts with the PS process.
