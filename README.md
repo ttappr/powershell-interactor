@@ -3,6 +3,10 @@
 This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system.
 
+I need some help resolving the issue described below. I tried to make it as 
+easy as possible to run this example; I've even provided a simple web server
+that runs the web app with no configuration necessary.
+
 This design may be useful for extensions that show a nice feature rich popup
 page, and it's the main UI the user interacts with. However, this isn't a
 good setup to support arbitrary web pages communicating with the extension.
