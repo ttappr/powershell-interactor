@@ -112,7 +112,7 @@ The steps to get this to run on a Windows system are relatively easy:
 
 After the set up is done, open the browser to the local site. The page has one
 button on it that sends a request and recevies a response.
-* Open browser to `http:\\localhost:4000`
+
 * Right-mouse-click the loaded extension icon and select `Inspect` to open the
   DevTools Inspector. This will force the extension's popup page to stay loaded.
 * Set breakpoints in the listeners or other interesting points in code.
