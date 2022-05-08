@@ -20,7 +20,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://*/*"],
+            "matches": ["*://localhost/*"],
             "js": ["extension.js"],
             "run_at": "document_end"
         }
@@ -28,7 +28,7 @@
     "web_accessible_resources": [
         {
             "resources": ["injected.js"],
-            "matches": ["*://*/*"]
+            "matches": ["*://localhost/*"]
         }
     ]
 }

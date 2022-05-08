@@ -6,7 +6,7 @@ window.addEventListener('incomingMessage', (e) => {
     span.innerText = JSON.stringify(e.detail);
 });
 
-// Function called when button on wepage is pressed.
+// Function called when button on webpage is pressed.
 function sendRequest(request) {
     // Issue message event visible to extension content scripts.
     let e = new CustomEvent('outgoingMessage', {detail: request});

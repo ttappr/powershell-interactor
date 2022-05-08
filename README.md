@@ -3,24 +3,23 @@
 This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system.
 
-The extension enables scripts running on a webpage to make requests to the host
-process and receive data back. For security reasons, sending arbitrary 
-PowerShell commands isn't implemented. One command is implemented to demonstrate
-getting a listing of files in the native host's working directory.
+For security reasons, sending arbitrary PowerShell commands isn't implemented. 
+One command is implemented to demonstrate getting a listing of files in the 
+native host's working directory.
 
 Any commands added to the example should be well designed not to permit the 
 extension to be used as a potential attack vector.
 
 ## Communication From Webpage to Native Process
 
-After some reading and experimentation, I've found a workable solution to 
-support communication between all components including the extension *content
-scripts*, extension *service worker*, webpage scripts, and the Native Messaging
-host.
+It took me some reading of documetns, hunting the 'net for answers, and 
+experimentation a workable solution to support communication between all 
+components including the extension *content scripts*, extension *service 
+worker*, webpage scripts, and the Native Messaging host.
 
-The approach uses a `CustomEvent` to support communication between the scripts
-running in webpages and the extension's *content scripts*. The events are 
-dispatched through the `window` object on both endpoints. The event on each
+The approach uses two `CustomEvent`s to support communication between the 
+scripts running in webpages and the extension's *content scripts*. The events
+are dispatched through the `window` object on both endpoints. The event on each
 side is attached to using code similar to:
 
 ```javascript
@@ -34,13 +33,14 @@ worker* (background script), the `browser.runtime.onConnect` event is subscribed
 to by the *service worker*. The *content scripts* can then use 
 `browser.runtime.connect()` to initiate a connection with its *service worker*.
 Each endpoint receives a port object that they can use to pass event messages
-to eachother using their `postMessage()` method. Each receives these messages
+to each other using their `postMessage()` method. Each receives these messages
 by listening on the ports' `onMessage` event.
 
+### Sequence Diagram
 
 ![Component Communication](./out/sequence/communication.svg)
 
-### Components
+### Diagramed Components
 |Component|File|Description|
 |---------|----|-----------|
 |webpage  |`website\app-script.js`|The scripts in the page the user interacts with.|
@@ -77,6 +77,17 @@ by listening on the ports' `onMessage` event.
 * The webpage script receives the custom event that holds the response from the
   native host and displays it.
 
+## Example Requirements
+
+This example can run on Linux, but the instructions below have some steps
+specific to Windows. Anyone savvy, or bold, enough to experiment with this 
+project shouldn't have too much difficulty translating the steps for Linux or
+Mac.
+* PowerShell Core is needed. Also known as PowerShell 7. PowerShell has versions
+  for Mac and Linux as well as Windows.
+* Python 3 to run the simple HTTP server. Otherwise, you can host the webpage
+  in any other web server.
+
 ## Setup
 
 The steps to get this to run on a Windows system are relatively easy:
@@ -107,3 +118,9 @@ button on it that sends a request and recevies a response.
 * Press the button and observe the effects.
 * The PS host produces a log in its own folder, `log.txt` that can be checked to
   make sure it's receiving and sending.
+
+The `\pshost\runhost.bat` file has an absolute path to the PowerShell 7/Core
+executable on Windows. This will need to be modified to the absolute path
+on the host system if using Linux or Mac. I don't know if the PowerShell 
+console on other platforms supports `.bat` files, so it may need conversion 
+to a `bash` script - it's only a couple lines of code. Simple.
