@@ -3,24 +3,23 @@
 This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system.
 
-The extension enables scripts running on a webpage to make requests to the host
-process and receive data back. For security reasons, sending arbitrary 
-PowerShell commands isn't implemented. One command is implemented to demonstrate
-getting a listing of files in the native host's working directory.
+For security reasons, sending arbitrary PowerShell commands isn't implemented. 
+One command is implemented to demonstrate getting a listing of files in the 
+native host's working directory.
 
 Any commands added to the example should be well designed not to permit the 
 extension to be used as a potential attack vector.
 
 ## Communication From Webpage to Native Process
 
-After some reading and experimentation, I've found a workable solution to 
-support communication between all components including the extension *content
-scripts*, extension *service worker*, webpage scripts, and the Native Messaging
-host.
+It took me some reading of documetns, hunting the 'net for answers, and 
+experimentation a workable solution to support communication between all 
+components including the extension *content scripts*, extension *service 
+worker*, webpage scripts, and the Native Messaging host.
 
-The approach uses a `CustomEvent` to support communication between the scripts
-running in webpages and the extension's *content scripts*. The events are 
-dispatched through the `window` object on both endpoints. The event on each
+The approach uses two `CustomEvent`s to support communication between the 
+scripts running in webpages and the extension's *content scripts*. The events
+are dispatched through the `window` object on both endpoints. The event on each
 side is attached to using code similar to:
 
 ```javascript
@@ -34,13 +33,13 @@ worker* (background script), the `browser.runtime.onConnect` event is subscribed
 to by the *service worker*. The *content scripts* can then use 
 `browser.runtime.connect()` to initiate a connection with its *service worker*.
 Each endpoint receives a port object that they can use to pass event messages
-to eachother using their `postMessage()` method. Each receives these messages
+to each other using their `postMessage()` method. Each receives these messages
 by listening on the ports' `onMessage` event.
 
 
 ![Component Communication](./out/sequence/communication.svg)
 
-### Components
+### Diagramed Components
 |Component|File|Description|
 |---------|----|-----------|
 |webpage  |`website\app-script.js`|The scripts in the page the user interacts with.|
