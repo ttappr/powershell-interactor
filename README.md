@@ -100,13 +100,16 @@ The steps to get this to run on a Windows system are relatively easy:
 * On Windows, add registry entry for the host process:
   * `HKCU:\Software\Google\Chrome\NativeMessagingHosts\com.tweedle.examplehost`
   * Set its `REG_SZ` value to the absolute path of the host's manifest file.
-    `\pshost\manifest.json` 
+    For example, 
+    `C:\Users\todd_\projects\example-extension\pshost\manifest.json` 
 * Load the unpacked extension in Chrome or MS Edge and make a note of its ID 
-  once loaded.
-* Update the `"allowed_origins"` field in `\pshost\manifest.json` with the 
-  extension's ID.
+  once loaded. The ID will look something like, 
+  `ibmjbffabdgooobjlmgbpabpknndpgdn`.
+* In the file, `\pshost\manifest.json`, update the `"allowed_origins"` field
+  with the extension's ID.
   * Also update the `"path"` field with the absolute path to the batch file,
     `\pshost\runhost.bat`.
+* In `\website\app-script.js`, `line: 4`, update the extension ID.
 * Open a command shell console and `cd` in to the `\website` folder and run
   the `webserver.py` script. Then open your browser to `http://localhost:4040`
 
@@ -116,6 +119,6 @@ button on it that sends a request and recevies a response.
 * Right-mouse-click the loaded extension icon and select `Inspect` to open the
   DevTools Inspector. This will force the extension's popup page to stay loaded.
 * Set breakpoints in the listeners or other interesting points in code.
-* Press the button.
+* Press the button and observe the effects.
 * The PS host produces a log in its own folder, `log.txt` that can be checked to
   make sure it's receiving and sending.
