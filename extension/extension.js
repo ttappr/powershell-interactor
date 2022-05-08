@@ -1,4 +1,5 @@
 
+/*
 // Receive message from web page and send request to service worker.
 chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
     let channel = new MessageChannel();
@@ -9,3 +10,9 @@ chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => 
         sendResponse(event.data);
     }
 });
+*/
+let scr = document.createElement('script');
+scr.src = chrome.runtime.getURL('injected.js');
+//scr.onload = () => { scr.remove(); }
+
+(document.head || document.documentElement).appendChild(scr);
