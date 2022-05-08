@@ -36,6 +36,7 @@ Each endpoint receives a port object that they can use to pass event messages
 to each other using their `postMessage()` method. Each receives these messages
 by listening on the ports' `onMessage` event.
 
+## Communication Between Components
 
 ![Component Communication](./out/sequence/communication.svg)
 
