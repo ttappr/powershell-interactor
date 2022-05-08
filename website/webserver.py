@@ -1,9 +1,8 @@
-from http.server import HTTPServer, CGIHTTPRequestHandler
+from http.server import HTTPServer
 
 if __name__ == '__main__':
     try:
-        CGIHTTPRequestHandler.cgi_directories = ['/cgi-bin']
-        httpd = HTTPServer(('', 4040), CGIHTTPRequestHandler)
+        httpd = HTTPServer(('', 4040), None)
         print(f"Running server. Use [ctrl]-c to terminate.")
 
         httpd.serve_forever()

@@ -44,7 +44,7 @@ runtime.sendMessage()-> :                :                  :
 |webpage  |`website\app-script.js`|The page or app the user interacts with.|
 |"middle" |`extension\extension.js`|The go-between for the webpage and background service worker.|
 |worker   |`extension\background.js`|The background service worker that interacts with PowerShell.|
-|powershell|`pshost\host.ps1`|A PowerShell process started by the browser and connected via Native Messaging|
+|powershell|`pshost\host.ps1`|A PowerShell process started by the browser and connected via Native Messaging.|
 
 ### Sequence
 * The webpage sends a message along with a response callback to the middle 
@@ -115,8 +115,9 @@ The steps to get this to run on a Windows system are relatively easy:
 After the set up is done, open the browser to the local site. The page has one
 button on it that sends a request and recevies a response.
 
-* Right-mouse-click the loaded extension icon and select `Inspect` to open the
-  DevTools Inspector. This will force the extension's popup page to stay loaded.
+* Right-mouse-click the loaded extension icon and select `Inspect popup` to open
+  the DevTools Inspector. This will force the extension's popup page to stay 
+  loaded.
 * Set breakpoints in the listeners or other interesting points in code.
 * Press the button and observe the effects.
 * The PS host produces a log in its own folder, `log.txt` that can be checked to
