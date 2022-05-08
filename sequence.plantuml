@@ -1,0 +1,38 @@
+@startuml communication
+
+skinparam style strictuml
+'skinparam monochrome reverse
+
+box browser
+    participant webpage as W
+end box
+box extension
+    participant content as C
+    participant background as B
+end box
+box platform
+    participant powershell as P
+end box
+
+P <-- P: subscribe onConnect
+
+W -> W: dispatchEvent()
+W --> C: message event
+
+C -> C: connect()
+C --> B: onConnect event
+C -> C: postMessage()
+C --> B: message event
+
+B -> B: connectNative()
+B -> B: postMessage()
+B --> P: stdin
+B <-- P: stdout
+
+B <- B: postMessage()
+C <-- B: message event
+
+C <- C: dispatchEvent()
+W <-- C: response event
+
+@enduml

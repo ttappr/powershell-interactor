@@ -4,8 +4,15 @@
     <title>Test PowerShell Interactor</title>
 </head>
 <body>
-    <p>Received: <span id="response"></span></p>
-    <button onclick="sendRequest()">Send Request</button>
+    <p>
+        Press button to send a LIST_WORKING_DIRECTORY request to Native 
+        Messaging host.
+    </p>
+    
+    <p>Response: <span id="response">...</span></p>
+
+    <button onclick="sendRequest('LIST_WORKING_DIRECTORY')">Send</button>
+
     <script type="text/javascript" src="app-script.js"></script>
 </body>
 </html>

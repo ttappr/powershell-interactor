@@ -3,100 +3,79 @@
 This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system.
 
-I need some help resolving the issue described below. I tried to make it as 
-easy as possible to run this example; I've even provided a simple web server
-that runs the web app with no configuration necessary.
+The extension enables scripts running on a webpage to make requests to the host
+process and receive data back. For security reasons, sending arbitrary 
+PowerShell commands isn't implemented. One command is implemented to demonstrate
+getting a listing of files in the native host's working directory.
 
-This design may be useful for extensions that show a nice feature rich popup
-page, and it's the main UI the user interacts with. However, this isn't a
-good setup to support arbitrary web pages communicating with the extension.
-I need some help on what direction to take to support the latter scenario.
+Any commands added to the example should be well designed not to permit the 
+extension to be used as a potential attack vector.
 
-The sequence diagram below shows which particular browser API's were used to
-communicate between the components.
+## Communication From Webpage to Native Process
 
-### Sequence Diagram
+After some reading and experimentation, I've found a workable solution to 
+support communication between all components including the extension *content
+scripts*, extension *service worker*, webpage scripts, and the Native Messaging
+host.
 
-```console
-+---------+       +---------+       +---------+   |   +------------+
-| webpage | <---> |"middle" | <---> |  worker | <-|-> | powershell |
-+---------+       +---------+       +---------+   |   +------------+
-  Web App         : . . . . Extension . . . . :   |   Host Platform
-     :                  :                :                  :
-runtime.sendMessage()-> :                :                  :
-     :                  :                :                  :
-     :     navigator.serviceWorker       :                  :
-     :              .controller          :                  :
-     :              .postMessage() ----> :                  :
-     :                  :                :                  :
-     :                  :     runtime.connectNative()       :
-     :                  :            .postMessage() ------> :
-     :                  :                :         stdin -> :
-     :                  :                :<-------------- stdout
-     :                  :<--------- MessageChannel          :
-     :                  :            .postMessage()         :
-     :<------------ callback()           :                  :
+The approach uses a `CustomEvent` to support communication between the scripts
+running in webpages and the extension's *content scripts*. The events are 
+dispatched through the `window` object on both endpoints. The event on each
+side is attached to using code similar to:
 
+```javascript
+window.addEventListener('incomingMessage', (e) => { e.detail ...});
+window.addEventListener('outgoingMessage', (e) => { e.detail ...});
 ```
+
+
+For communication between the extension's *content scripts* and its *service 
+worker* (background script), the `browser.runtime.onConnect` event is subscribed
+to by the *service worker*. The *content scripts* can then use 
+`browser.runtime.connect()` to initiate a connection with its *service worker*.
+Each endpoint receives a port object that they can use to pass event messages
+to eachother using their `postMessage()` method. Each receives these messages
+by listening on the ports' `onMessage` event.
+
+
+![Component Communication](./out/sequence/communication.svg)
+
 ### Components
 |Component|File|Description|
 |---------|----|-----------|
-|webpage  |`website\app-script.js`|The script in the page the user interacts with.|
-|"middle" |`extension\extension.js`|The go-between for the webpage and background service worker.|
-|worker   |`extension\background.js`|The background service worker that interacts with PowerShell.|
-|powershell|`pshost\host.ps1`|A PowerShell process started by the browser and connected via Native Messaging.|
+|webpage  |`website\app-script.js`|The scripts in the page the user interacts with.|
+|content  |`extension\extension.js`|The *content scripts* of the extension.|
+|background|`extension\background.js`|The background service worker that interacts with PowerShell.|
+|powershell|`pshost\host.ps1`|A PowerShell process connected via Native Messaging.|
 
-### Sequence
-* The webpage sends a message along with a response callback to the middle 
-  component using `chrome.runtime.sendMessage()`.
-* The middle component's `runtime.onMessageExternal` listener receives the 
-  message. It then creates a `MessageChannel` to pass to the worker so it can
-  receive the response later. One port of this channel is passed along with the
-  message to the worker.
-* The worker receives the message and port via its `window.onmessage` listener.
-  It then sends the message to the native host, and recieves the host's 
-  response. 
-* The response is passed from the worker back to the middle component through
-  the `MessageChannel` port shared by the two.
-* The middle component then passes the response to the webpage via the callback
-  the webpage provided with the initial request.
-
-## Supported Scenario
-  
- This solution works under a specific scenario: the extension popup is 
- displayed.
- 
- A webpage can communicate with the service worker via the popup. The popup 
- page has a `<script>` reference to a JavaScript file implementing the message
- passing between webpage and service worker.
- 
-  ## Problem
- 
-I want my web app to be able to indirectly send and receive data to/from the 
-PowerShell process via these other components at any time. This should work
-when there are no extension windows (popup/context) showing.
-
-As it is now, I have to use the DevTools Inspector on the extension's popup
-to force it to stay active while I test the web app.
-
-## Solutions?
-
-I'm looking for any approach that lets my web app (web page) access the 
-background service worker on demand to communicate with PowerShell.
-
-One approach I tried involved finding a way to keep one page within the 
-extension loaded, but not visible. I thought that maybe the `sandbox` field in
-`manifest.json` could accomplish this, but I didn't have any luck. I tried 
-importing the webpage facing script of the extension into the background 
-service worker, but wasn't sure how to proceed since I'd have to redo the 
-messaging passing between the middle script and web page. Plus the service
-worker may not stay loaded - so same problem I have with the "middle" component
-put inside the popup.
-
-The next direction I'll likely take is a content page approach with injecting
-Javascript into the browser's active window. Maybe the API's used could be 
-be the same, or similar, to what's in between "middle" and worker in the
-sequence diagram now. I think that's unlikely though...
+### Sequence Details
+* Each component, when loaded, sets up its event handlers. One particularly
+  important subscription is the Service Worker's (background's) registration
+  for `browser.runtime.onConnect`. This is the magic that enables waking up the
+  dormant worker for messaging.
+* The webpage scripts and *content scripts* register for custom events they
+  each generate. These events are posted to the `window` object. This allows
+  messages to be passed between them as event data.
+* When a browser script fires a message event to the *content scripts*, a
+  *content script* then wakes up the service worker by calling 
+  `browser.runtime.connect()`.
+* The background worker's registered listener saves the shared *port* it 
+  received from the event for passing back the response later. It also attaches
+  a listener to the port for receiving messages.
+* The *content script* then invokes `port.postMessage()` on its shared port,
+  which fires a message event to the service worker.
+* The service worker then initiates a connection to the Native Messaging host
+  process via, `browser.runtime.connectNative()`. The worker receives back a
+  shared port to receive the response from the host.
+* The browser wakes up the host process and transacts with it over standard I/O.
+  When it's received a complete response from the host a message is posted back
+  to the service worker.
+* The service worker receives the message via the port it shares with the host,
+  and posts a message back to the *content script* via their shared port.
+* The *content script* receives the message event and fires a custom event
+  to the `window` object.
+* The webpage script receives the custom event that holds the response from the
+  native host and displays it.
 
 ## Setup
 
@@ -122,15 +101,9 @@ After the set up is done, open the browser to the local site. The page has one
 button on it that sends a request and recevies a response.
 
 * Right-mouse-click the loaded extension icon and select `Inspect popup` to open
-  the DevTools Inspector. This will force the extension's popup page to stay 
-  loaded.
+  the Dev Tools Inspector for extension debug. Press `[ctrl]-[shift]-i` to open
+  Dev Tools for the webpage.
 * Set breakpoints in the listeners or other interesting points in code.
 * Press the button and observe the effects.
 * The PS host produces a log in its own folder, `log.txt` that can be checked to
   make sure it's receiving and sending.
-## New Approach
-
-After some reading and experimentation, I've found a workable solution to 
-support communication between the components.
-
-![Component Communication](./out/sequence/communication.svg)
