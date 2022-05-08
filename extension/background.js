@@ -20,5 +20,6 @@ self.addEventListener('message', (event) => {
         requestPort.postMessage('Native host port disconnected...');
     });
     
+    // Send response back to middle component.
     nativePort.postMessage(event.data);
 });

@@ -62,3 +62,29 @@ extension loaded, but not visible. I thought that maybe the `sandbox` field in
 importing the webpage facing script of the extension into the background 
 service worker, but wasn't sure how to proceed since I'd have to redo the 
 messaging passing between the middle script and web page.
+
+## Setup
+
+The steps to get this to run on a Windows system are easy:
+
+* On Windows, add registry entry for the host process:
+  * `HKCU:\Software\Google\Chrome\NativeMessagingHosts\com.tweedle.examplehost`
+  * Set its `REG_SZ` value to the absolute path of batch file 
+    `\pshost\runhost.bat`
+* Set up Web server to host files in `\website`.
+  * Give it a nameless URL like `http:\\localhost:4000` - it has to match the 
+    filters in the manifest files.
+* Load the unpacked extension in Chrome or MS Edge and make a note of its ID 
+  once loaded.
+* Update the `"allowed_origins"` field in `\pshost\manifest.json` with the 
+  extension's ID.
+
+After the set up is done, open the browser to the local site. The page has one
+button on it that sends a request and recevies a response.
+* Open browser to `http:\\localhost:4000`
+* Right-mouse-click the loaded extension icon and select `Inspect` to open the
+  DevTools Inspector. This will force the extension's popup page to stay loaded.
+* Set breakpoints in the listeners or other interesting points in code.
+* Press the button.
+* The PS host produces a log in its own folder, `log.txt` that can be checked to
+  make sure it's receiving and sending.
