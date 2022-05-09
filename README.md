@@ -100,7 +100,7 @@ standard I/O.
 * **(11-13)** The *service worker* receives the message via the port it shares 
   with the host, and posts a message back to the *content script* via their 
   shared port.
-* **(14-15)** The *content script* receives the message event and fires a custom
+* **(13-15)** The *content script* receives the message event and fires a custom
   event to the `window` object.
 * The webpage script receives the custom event that holds the response from the
   native host and displays it.
