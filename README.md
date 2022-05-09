@@ -106,7 +106,7 @@ Mac.
   for Mac and Linux as well as Windows.
 * Python 3 to run the simple HTTP server. Otherwise, you can host the webpage
   in any other web server.
-* Example was tested in Chrome and MS Edge. It's likely supported an any 
+* Example was tested in Chrome and MS Edge. It's likely supported on any 
   browser based on the same internals.
 
 ## Setup
