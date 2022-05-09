@@ -24,11 +24,5 @@
             "js": ["extension.js"],
             "run_at": "document_end"
         }
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": ["injected.js"],
-            "matches": ["*://localhost/*"]
-        }
     ]
 }
