@@ -18,7 +18,7 @@ the extension could theoretically be exploited.
 The browser has security measures that are intended to protect extensions from
 pages and other extensions gaining unsafe access. The manifest file for this
 extension should be free of any rules that would allow such access. However,
-it's prodent not to take this security for granted. Only implement features 
+it's prudent not to take this security for granted. Only implement features 
 you need, and restrict their access as much as possible to mitigate any
 "what if" scenarios should they ever occur. 
 
