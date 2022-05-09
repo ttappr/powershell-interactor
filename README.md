@@ -1,5 +1,7 @@
  # PowerShell Interactor Browser Extension
  
+ ⚠️ Use with caution ⚠️
+ 
 This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system. The 
 average file length is around 10 lines of code. Very minimal.
