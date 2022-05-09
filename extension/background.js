@@ -24,7 +24,7 @@ chrome.runtime.onConnect.addListener((port) => {
                 contentPort.postMessage(message);
             });
 
-            nativePort.onDisconnect((e) => {
+            nativePort.onDisconnect.addListener((e) => {
                 nativePort = null;
             });
         }

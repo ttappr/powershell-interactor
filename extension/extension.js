@@ -15,6 +15,9 @@ window.addEventListener('outgoingMessage', (e) => {
             let e = new CustomEvent('incomingMessage', {detail: message});
             window.dispatchEvent(e);
         });
+        servicePort.onDisconnect.addListener((e) => {
+            servicePort = null;
+        });
     }
     // Pass message along to Service Worker.
     servicePort.postMessage(e.detail);
