@@ -62,34 +62,42 @@ the port's `onMessage` event.
 |Component|File|Description|
 |---------|----|-----------|
 |webpage  |`website\app-script.js`|The scripts in the page the user interacts with.|
-|content  |`extension\extension.js`|The *content scripts* of the extension.|
-|background|`extension\background.js`|The background service worker that interacts with PowerShell.|
+|content  |`extension\extension.js`|The *content script* of the extension.|
+|background|`extension\background.js`|The background *service worker* that interacts with PowerShell.|
 |powershell|`pshost\host.ps1`|A PowerShell process connected via Native Messaging.|
+
+A *content script* is a script that gets injected into any web page the 
+extension manifest permits. It has access to the target page's DOM, but not 
+its JS code or objects. The page also can't access the code of the *content
+script*. The *service worker* is similar to a web worker, but has access to
+the Native Messaging interface and other privileged features. *Native Messaging*
+is the feature that allows the browser to interact with host processes over 
+standard I/O.
 
 ### Sequence Details
 
 * Each component, when loaded, sets up its event handlers. One particularly
-  important subscription is the Service Worker's (background's) registration
+  important subscription is the *service worker*'s (background's) registration
   for `browser.runtime.onConnect`. This is the magic that enables waking up the
   dormant worker for messaging.
-* The webpage scripts and *content scripts* register for custom events they
+* The webpage scripts and *content script* register for custom events they
   each generate. These events are posted to the `window` object. This allows
   messages to be passed between them as event data.
-* When a browser script fires a message event to the *content scripts*, a
-  *content script* then wakes up the service worker by calling 
+* When a browser script fires a message event to the *content script*, a
+  *content script* then wakes up the *service worker* by calling 
   `browser.runtime.connect()`.
 * The background worker's registered listener saves the shared *port* it 
   received from the event for passing back the response later. It also attaches
   a listener to the port for receiving messages.
 * The *content script* then invokes `port.postMessage()` on its shared port,
-  which fires a message event to the service worker.
-* The service worker then initiates a connection to the Native Messaging host
+  which fires a message event to the *service worker*.
+* The *service worker* then initiates a connection to the Native Messaging host
   process via, `browser.runtime.connectNative()`. The worker receives back a
   shared port to receive the response from the host.
 * The browser wakes up the host process and transacts with it over standard I/O.
-  When it's received a complete response from the host a message is posted back
-  to the service worker.
-* The service worker receives the message via the port it shares with the host,
+  When it has received a complete response from the host, a message is posted 
+  back to the *service worker*.
+* The *service worker* receives the message via the port it shares with the host,
   and posts a message back to the *content script* via their shared port.
 * The *content script* receives the message event and fires a custom event
   to the `window` object.
