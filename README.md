@@ -4,6 +4,8 @@ This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system. The 
 average file length is around 10 lines of code. Very minimal.
 
+## Use With Caution
+
 For security reasons, sending arbitrary PowerShell commands isn't implemented. 
 The extension supports a single command that returns a listing of files in the 
 native host's working directory.
