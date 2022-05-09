@@ -15,9 +15,6 @@
         "nativeMessaging",
         "scripting"
     ],
-    "externally_connectable": {
-        "matches": ["*://localhost/*"]
-    },
     "content_scripts": [
         {
             "matches": ["*://localhost/*"],
