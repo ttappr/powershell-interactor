@@ -13,7 +13,7 @@ extension to be used as a potential attack vector.
 ## Communication From Webpage to Native Process
 
 It took me some reading of documetns, hunting the 'net for answers, and 
-experimentation a workable solution to support communication between all 
+experimentation to find a workable solution to support communication between all 
 components including the extension *content scripts*, extension *service 
 worker*, webpage scripts, and the Native Messaging host.
 
