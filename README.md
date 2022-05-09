@@ -22,6 +22,12 @@ it's prudent not to take this security for granted. Only implement features
 you need, and restrict their access as much as possible to mitigate any
 "what if" scenarios should they ever occur. 
 
+In the extension's manifest, the `"content_scripts"."matches"` field controls
+what pages the *content script* is loaded to. As it is now, the script will
+load to any `localhost` page. Make sure this filter is set to only allow 
+URL's you have control over. Any page the *content script* is loaded to has
+access to the extension's features.
+
 ## Communication From Webpage to Native Process
 
 It took me some reading of documentation, hunting the 'net for answers, and 
