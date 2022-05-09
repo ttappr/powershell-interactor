@@ -76,31 +76,32 @@ standard I/O.
 
 ### Sequence Details
 
-* Each component, when loaded, sets up its event handlers. One particularly
-  important subscription is the *service worker*'s (background's) registration
-  for `browser.runtime.onConnect`. This is the magic that enables waking up the
-  dormant worker for messaging.
+* **(1)** Each component, when loaded, sets up its event handlers. One 
+  particularly important subscription is the *service worker*'s (background's) 
+  registration for `browser.runtime.onConnect`. This is the magic that enables 
+  waking up the dormant worker for messaging.
 * The webpage scripts and *content script* register for custom events they
   each generate. These events are posted to the `window` object. This allows
   messages to be passed between them as event data.
-* When a browser script fires a message event to the *content script*, a
-  *content script* then wakes up the *service worker* by calling 
+* **(2-5)** When a browser script fires a message event to the *content script*,
+  a *content script* then wakes up the *service worker* by calling 
   `browser.runtime.connect()`.
-* The background worker's registered listener saves the shared *port* it 
+* **(5)** The *service worker's* registered listener saves the shared *port* it 
   received from the event for passing back the response later. It also attaches
   a listener to the port for receiving messages.
-* The *content script* then invokes `port.postMessage()` on its shared port,
-  which fires a message event to the *service worker*.
-* The *service worker* then initiates a connection to the Native Messaging host
-  process via, `browser.runtime.connectNative()`. The worker receives back a
-  shared port to receive the response from the host.
-* The browser wakes up the host process and transacts with it over standard I/O.
-  When it has received a complete response from the host, a message is posted 
-  back to the *service worker*.
-* The *service worker* receives the message via the port it shares with the host,
-  and posts a message back to the *content script* via their shared port.
-* The *content script* receives the message event and fires a custom event
-  to the `window` object.
+* **(6-7)** The *content script* then invokes `port.postMessage()` on its shared 
+  port, which fires a message event to the *service worker*.
+* **(8)** The *service worker* then initiates a connection to the Native 
+  Messaging host process via, `browser.runtime.connectNative()`. The worker 
+  receives back a shared port to receive the response from the host.
+* **(9-11)** The browser wakes up the host process and transacts with it over 
+  standard I/O. When it has received a complete response from the host, a 
+  message is posted back to the *service worker*.
+* **(11-13)** The *service worker* receives the message via the port it shares 
+  with the host, and posts a message back to the *content script* via their 
+  shared port.
+* **(14-15)** The *content script* receives the message event and fires a custom
+  event to the `window` object.
 * The webpage script receives the custom event that holds the response from the
   native host and displays it.
 
