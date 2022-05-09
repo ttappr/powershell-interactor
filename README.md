@@ -126,3 +126,6 @@ executable on Windows. This will need to be modified to the absolute path
 on the host system if using Linux or Mac. I don't know if the PowerShell 
 console on other platforms supports `.bat` files, so it may need conversion 
 to a `bash` script - it's only a couple lines of code. Simple.
+
+The registration of the Native Messaging host on Mac and Linux will also be
+different. Check [this reference](https://developer.chrome.com/docs/apps/nativeMessaging/#native-messaging-host-location) for details.
