@@ -1,40 +1,43 @@
  # PowerShell Interactor Browser Extension
  
 This is a minimal example of a browser extension that allows a Web application
-or site to interact with PowerShell running locally on the host system.
+or site to interact with PowerShell running locally on the host system. The 
+average file length is around 10 lines of code. Very minimal.
 
 For security reasons, sending arbitrary PowerShell commands isn't implemented. 
-One command is implemented to demonstrate getting a listing of files in the 
+The extension supports a single command that returns a listing of files in the 
 native host's working directory.
 
-Any commands added to the example should be well designed not to permit the 
-extension to be used as a potential attack vector.
+Any commands added to the example should be designed not to permit the 
+extension's use as a potential attack vector. For instance, if the PowerShell
+based native host processed raw text from the browser using `Invoke-Expression`, 
+the extension could theoretically be exploited.
 
 ## Communication From Webpage to Native Process
 
-It took me some reading of documetns, hunting the 'net for answers, and 
-experimentation to find a workable solution to support communication between all 
-components including the extension *content scripts*, extension *service 
-worker*, webpage scripts, and the Native Messaging host.
+It took me some reading of documentation, hunting the 'net for answers, and 
+experimentation to find a workable solution that supports communication between 
+all components of the extension. These components include the extension *content
+scripts*, extension *service worker*, webpage scripts, and the Native Messaging
+host.
 
 The approach uses two `CustomEvent`s to support communication between the 
-scripts running in webpages and the extension's *content scripts*. The events
-are dispatched through the `window` object on both endpoints. The event on each
-side is attached to using code similar to:
+script running in the webpage and the extension's *content script*. The events
+are dispatched through the `window` object from both endpoints. Each endpoint 
+registers for its respective event with code similar to:
 
 ```javascript
 window.addEventListener('incomingMessage', (e) => { e.detail ...});
 window.addEventListener('outgoingMessage', (e) => { e.detail ...});
 ```
 
-
-For communication between the extension's *content scripts* and its *service 
+For communication between the extension's *content script* and its *service 
 worker* (background script), the `browser.runtime.onConnect` event is subscribed
-to by the *service worker*. The *content scripts* can then use 
-`browser.runtime.connect()` to initiate a connection with its *service worker*.
-Each endpoint receives a port object that they can use to pass event messages
-to each other using their `postMessage()` method. Each receives these messages
-by listening on the ports' `onMessage` event.
+to by the *service worker*. The *content script* can then use 
+`browser.runtime.connect()` to initiate a connection with the *service worker*.
+Each endpoint receives a port object that they can use to pass messages to each 
+other via the port's `postMessage()` method. Each receives messages through 
+the port's `onMessage` event.
 
 ### Sequence Diagram
 
@@ -49,6 +52,7 @@ by listening on the ports' `onMessage` event.
 |powershell|`pshost\host.ps1`|A PowerShell process connected via Native Messaging.|
 
 ### Sequence Details
+
 * Each component, when loaded, sets up its event handlers. One particularly
   important subscription is the Service Worker's (background's) registration
   for `browser.runtime.onConnect`. This is the magic that enables waking up the
