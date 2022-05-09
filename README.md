@@ -112,7 +112,6 @@ The steps to get this to run on a Windows system are relatively easy:
   with the extension's ID.
   * Also update the `"path"` field with the absolute path to the batch file,
     `\pshost\runhost.bat`.
-* In `\website\app-script.js`, `line: 4`, update the extension ID.
 * Open a command shell console and `cd` in to the `\website` folder and run
   the `webserver.py` script. Then open your browser to `http://localhost:4040`
 
