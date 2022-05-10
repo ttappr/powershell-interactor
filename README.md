@@ -58,7 +58,7 @@ the port's `onMessage` event.
 
 ![Component Communication](./out/sequence/communication.svg)
 
-### Diagramed Components
+### Diagrammed Components
 |Component|File|Description|
 |---------|----|-----------|
 |webpage  |`website\app-script.js`|The scripts in the page the user interacts with.|

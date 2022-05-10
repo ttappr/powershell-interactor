@@ -46,7 +46,11 @@ while ($true) {
         # Avoid processing raw data from browsers using Invoke-Expression, 
         # et al. Implement specific operations.
         if ($message -match 'LIST_WORKING_DIRECTORY') {
-            $list = (Get-ChildItem .).Name | ConvertTo-Json
+            # Any extra output from commands needs to either be suppressed or
+            # redirected to the standard error stream, or it will interfere
+            # with intended data sent back to the browser.
+            $list = (Get-ChildItem .).Name | 
+                    ConvertTo-Json -WarningAction Ignore
             Write-Message $list
         } else {
             Write-Message '"Unrecognized request!"'
