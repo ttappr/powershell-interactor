@@ -6,10 +6,8 @@ average file length is around 10 lines of code. Very minimal.
 
 ## Manifest V3
 
-This extension is implemented in compliance with the Manifest V3 format of its
-`manifest.json` file. 
-
-For more information, refer to [Overview of Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/).
+This extension is implemented in compliance with Manifest V3. For more 
+information, refer to [Overview of Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/).
 
 > Manifest V3 (Manifest V3) is a major step forward in steering towards our 
   vision for the extensions platform. Manifest V3 focuses on the three pillars 
