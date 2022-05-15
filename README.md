@@ -1,4 +1,4 @@
- # PowerShell Interactor Browser Extension
+ # PowerShell Interactor Browser Extension, A Minimalist Example
  
 This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system. The 
