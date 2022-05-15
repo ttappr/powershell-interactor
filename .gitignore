@@ -3,3 +3,6 @@ website/web.config
 pshost/log.txt
 launchapp.ps1
 misc/
+extension.pem
+key.pub
+extension.crx

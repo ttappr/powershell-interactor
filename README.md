@@ -126,12 +126,11 @@ The steps to get this to run on a Windows system are relatively easy:
   * `HKCU:\Software\Google\Chrome\NativeMessagingHosts\com.tweedle.examplehost`
   * Set its `REG_SZ` value to the absolute path of the host's manifest file.
     For example, 
-    `C:\Users\todd_\projects\example-extension\pshost\manifest.json` 
+    `C:\Users\tweedle\projects\example-extension\pshost\manifest.json` 
 * Load the unpacked extension in Chrome or MS Edge and make a note of its ID 
-  once loaded. The ID will look something like, 
-  `ibmjbffabdgooobjlmgbpabpknndpgdn`.
-* In the file, `\pshost\manifest.json`, update the `"allowed_origins"` field
-  with the extension's ID.
+  once loaded. The ID will likely be, `eglfclmgnoelihamdmjabonpggmnnacn`.
+* In the file, `\pshost\manifest.json`, make sure the `"allowed_origins"` field
+  matches the extension's ID.
   * Also update the `"path"` field with the absolute path to the batch file,
     `\pshost\runhost.bat`.
 * Open a command shell console and `cd` in to the `\website` folder and run

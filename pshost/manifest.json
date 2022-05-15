@@ -4,6 +4,6 @@
     "path": "C:\\Users\\todd_\\projects\\example-extension\\pshost\\runhost.bat",
     "type": "stdio",
     "allowed_origins": [
-        "chrome-extension://ibmjbffabdgooobjlmgbpabpknndpgdn/"
+        "chrome-extension://eglfclmgnoelihamdmjabonpggmnnacn/"
     ]
 }

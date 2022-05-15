@@ -4,6 +4,7 @@
     "description": "Interacts with a PowerShell script.",
     "manifest_version": 3,
     "author": "tweedle@lexx.com",
+    "key": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDdbyW1BAeamtCZf2g5dKeNdexIeVIab1DYEWL54wdbAPOY5bltlzN2QzAZguu2g+7s4Ldf/lKBMRUgjovIWgMROj6am/fCQnnSDcJN0mip4jIFlVjodnxjwiuPKL2nHVdzqHs6qemdu6aBpDHfxeTUkzXTuvdgu6clLv/n2a4GDRhBC44limk8hWcnWdVKxvZq+7/WzDrfNA1eOe1JLhu0+EicHtGgyl7a19Wfd1OSDisJ8c60mLhWlPnQzXPOORPa5dssIwZqTdNh0vWly2ckvDHY1uw6nV/q8HEgK88KtPUzAf6fGJHYV6/qCmDCCkuWgQm3BbmrC+IIcyQ0oVLh",
     "action": {
         "default_title": "PowerShell Interactor",
         "default_popup": "popup.html"
