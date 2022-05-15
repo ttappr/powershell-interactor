@@ -4,6 +4,18 @@ This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system. The 
 average file length is around 10 lines of code. Very minimal.
 
+## Manifest V3
+
+This extension is implemented in compliance with the Manifest V3 format of its
+`manifest.json` file. 
+
+For more information, refer to [Overview of Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/).
+
+> Manifest V3 (Manifest V3) is a major step forward in steering towards our 
+  vision for the extensions platform. Manifest V3 focuses on the three pillars 
+  of that vision: privacy, security, and performance, while preserving and 
+  improving our foundation of capability and webbiness. 
+
 ## Use With Caution
 
 For security reasons, sending arbitrary PowerShell commands isn't implemented. 
