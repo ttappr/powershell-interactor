@@ -4,6 +4,9 @@ This is a minimal example of a browser extension that allows a Web application
 or site to interact with PowerShell running locally on the host system. The 
 average file length is around 10 lines of code. Very minimal.
 
+The code should serve as an example of what the basic components are and how 
+they transact, rather than an actual template to base larger projects on.
+
 ## Manifest V3
 
 This extension is implemented in compliance with Manifest V3. For more 
