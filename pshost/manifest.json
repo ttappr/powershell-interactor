@@ -1,7 +1,7 @@
 {
     "name": "com.tweedle.examplehost",
     "description": "PowerShell interactor.",
-    "path": "C:\\Users\\todd_\\projects\\example-extension\\pshost\\runhost.bat",
+    "path": "C:\\Users\\tweedle\\projects\\example-extension\\pshost\\runhost.bat",
     "type": "stdio",
     "allowed_origins": [
         "chrome-extension://eglfclmgnoelihamdmjabonpggmnnacn/"
