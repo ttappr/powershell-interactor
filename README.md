@@ -9,7 +9,7 @@ they transact, rather than an actual template to base larger projects on.
 
 ## Manifest V3
 
-This extension is implemented in compliance with Manifest V3. For more 
+This extension is implemented in accordance with Manifest V3. For more 
 information, refer to [Overview of Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/).
 
 > Manifest V3 (Manifest V3) is a major step forward in steering towards our 
